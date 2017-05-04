@@ -8,9 +8,17 @@ import java.awt.event.ActionListener;
 /**
  * Created by kasia on 04.05.2017.
  */
-public class InfoButton extends Button {
+public class InfoButton extends JMenuItem {
     public InfoButton() {
-        this.setLabel("Info");
+        setText("Info");
+        addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                InfoFrame info = new InfoFrame();
+                info.setVisible(true);
+            }
+        });
+    }
+    public void addListner() {
         addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 InfoFrame info = new InfoFrame();

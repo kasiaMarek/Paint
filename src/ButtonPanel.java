@@ -1,15 +1,14 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 /**
  * Created by kasia on 04.05.2017.
  */
 public class ButtonPanel extends JPanel {
-    private Mode mode = Mode.CIRCLE;
-    public ButtonPanel(){
-        add(new ShapeButton("Circle", Mode.CIRCLE));
+    private Mode mode = Mode.ELIPSE;
+
+    public ButtonPanel() {
+        add(new ShapeButton("Elipse", Mode.ELIPSE));
         add(new ShapeButton("Rectangle", Mode.RECTANGLE));
         add(new ShapeButton("Polygon", Mode.POLYGON));
         add(new ShapeButton("Select", Mode.SELECT));
@@ -18,17 +17,16 @@ public class ButtonPanel extends JPanel {
 
     public class ShapeButton extends Button {
 
-        public ShapeButton (String str, Mode m) {
+        public ShapeButton(String str, Mode m) {
             this.setLabel(str);
-            addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    mode = m;
-                }
+            addActionListener((e) -> {
+                Surface.setMode(m);
+                Surface.setPathToNull();
             });
         }
     }
 
-    public Mode getMode(){
+    public Mode getMode() {
         return mode;
     }
 }
