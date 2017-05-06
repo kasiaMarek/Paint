@@ -1,7 +1,7 @@
 import java.awt.*;
-import java.awt.event.*;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.GeneralPath;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import javax.swing.*;
 
@@ -50,9 +50,22 @@ public class Surface extends JPanel {
         GUI.doRepaint();
     }
 
+    public static double getXCenter(Shape shape){
+        Rectangle2D rec = shape.getBounds2D();
+        return rec.getX()+rec.getWidth()/2;
+    }
+
+    public static double getYCenter(Shape shape){
+        Rectangle2D rec = shape.getBounds2D();
+        return rec.getY()+rec.getHeight()/2;
+    }
+
     public static void resizeShape(double s) {
         AffineTransform a = new AffineTransform(s,0,0,s,0,0);
         Shape shape = new GeneralPath(listOfShapes.get(chosen)).createTransformedShape(a);
+        AffineTransform b = new AffineTransform(1,0,0,1, getXCenter(Mouse.chosenTemp) - getXCenter(shape),
+                getYCenter(Mouse.chosenTemp) - getYCenter(shape));
+        shape = new GeneralPath(shape).createTransformedShape(b);
         listOfShapes.set(chosen, shape);
         GUI.doRepaint();
     }

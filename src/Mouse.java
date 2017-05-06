@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.GeneralPath;
+import java.awt.geom.Rectangle2D;
 
 
 /**
@@ -17,6 +18,8 @@ public class Mouse extends MouseAdapter {
     GeneralPath path = new GeneralPath();
     static boolean isFirstClick = true;
 
+    public Mouse() {}
+
     public static void setIsFirstClick(boolean b) {
         isFirstClick = b;
     }
@@ -27,9 +30,6 @@ public class Mouse extends MouseAdapter {
                 return Surface.listOfShapes.indexOf(c);
         }
         return -1;
-    }
-
-    public Mouse() {
     }
 
     public void actRightMouseButton() {

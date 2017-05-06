@@ -12,6 +12,7 @@ public class OptionMenu extends JMenuBar {
     private void makeMenu() {
         menu.add(new InfoButton());
         menu.add(new SaveButton());
+        menu.add(new OpenButton());
     }
 
 }

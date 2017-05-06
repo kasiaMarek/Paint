@@ -9,24 +9,14 @@ class Rectangle extends Rectangle2D.Float {
         setFrame(x, y, width, height);
     }
 
-    public void setWidth(float w) {
-        if(w > 0)
-            this.width = w;
-        else
-            this.width = 0;
-    }
-
-    public void setHeight(float h) {
-        if(h > 0)
-            this.height = h;
-        else
-            this.height = 0;
-    }
-
-    public Rectangle resizeRectangle(float w, float h) {
+    public Rectangle resizeRectangle(float w, float h, float sx, float sy) {
         Rectangle rectangle = this;
-        rectangle.setWidth(w);
-        rectangle.setHeight(h);
+        rectangle.width = Math.abs(w);
+        rectangle.height = Math.abs(h);
+        if(w < 0)
+            rectangle.x = sx + w;
+        if(h < 0)
+            rectangle.y = sy + h;
         return rectangle;
 
     }

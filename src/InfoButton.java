@@ -18,14 +18,7 @@ public class InfoButton extends JMenuItem {
             }
         });
     }
-    public void addListner() {
-        addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                InfoFrame info = new InfoFrame();
-                info.setVisible(true);
-            }
-        });
-    }
+
     private class InfoFrame extends JFrame {
         public InfoFrame() {
             JLabel label = new JLabel();
