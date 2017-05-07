@@ -6,61 +6,142 @@ import java.util.ArrayList;
 import javax.swing.*;
 
 /**
- * Created by kasia on 03.05.2017.
+ * A class surface containing main area to draw and button panel.
+ * Contains information:
+ * <ul>
+ * <li> List of shapes seen in drawing area
+ * <li> List of colors for shapes
+ * <li> A temporary not-filled shape that is seen when a user draws a new shape
+ * <li> pol: a red circle which indicates the beginning of a polygon shape
+ * <li> Button panel
+ * <li> Mode: ELLIPSE, RECTANGLE, SELECT or POLYGON
+ * <li> Number of index of the shape chosen by user to edit, when no shape chosen set to -1
+ * </ul>
+ * @author Katarzyna Marek
+ * @version 1.0
  */
 public class Surface extends JPanel {
-    static ArrayList<Shape> listOfShapes = new ArrayList<>();
-    static ArrayList<Color> listOfColors = new ArrayList<>();
+    static private ArrayList<Shape> listOfShapes = new ArrayList<>();
+    static private ArrayList<Color> listOfColors = new ArrayList<>();
     static private GeneralPath path;
     static private Circle pol;
     static private ButtonPanel buttonPanel = new ButtonPanel();
-    static private Mode mode = Mode.ELIPSE;
+    static private Mode mode = Mode.ELLIPSE;
     static private int chosen = -1;
-
-    public static int getChosen() {
-        return chosen;
-    }
-
-    public static void setChosen(int chosen) {
-        Surface.chosen = chosen;
-    }
-
+    /**
+     * Constructor for surface. Adds button panel and mouse listeners.
+     */
     public Surface() {
         add(buttonPanel, BorderLayout.NORTH);
         addMouseListener(new Mouse() {});
         addMouseWheelListener(new MouseWheel() {});
         addMouseMotionListener(new MouseMove() {});
     }
-
-    public static void addPath(Shape shape) {
-        path = new GeneralPath(shape);
+    /**
+     * A getter for list of shapes.
+     * @param i index of wanted shape
+     * @return shape with i index
+     */
+    static Shape getShape(int i) {
+        return listOfShapes.get(i);
+    }
+    /**
+     * Adds new shape to the list of shapes and color for it on list of colors. And displays it in drawing area.
+     * @param shape shape that should be added
+     * @param color color of the shape that should be added
+     */
+    static void addShape(Shape shape, Color color) {
+        listOfShapes.add(0, shape);
+        listOfColors.add(0, color);
         GUI.doRepaint();
     }
-
+    /**
+     * Removes all the shapes from the list
+     */
+    static void removeShapes() {
+        for(int i = 0; i < Surface.listOfShapes.size(); i++) {
+            Surface.listOfShapes.remove(i);
+            Surface.listOfColors.remove(i);
+        }
+    }
+    /**
+     * Gives number of the shapes.
+     * @return Number of the shapes on the list. Seen in drawing area.
+     */
+    static int getNumberOfShapes(){return listOfShapes.size();}
+    /**
+     * A getter for list of colors.
+     * @param i index of wanted color
+     * @return color of the shape with i index
+     */
+    static Color getColor(int i) {
+        return listOfColors.get(i);
+    }
+    /**
+     * Getter for chosen
+     * @return Number of index on list of shapes of the shape that is currently chosen.
+     */
+    static int getChosen() {
+        return chosen;
+    }
+    /**
+     * Chooses the shape that was clicked and writes its index on list to chosen variable.
+     * @param x x coordinate of the click
+     * @param y y coordinate of the click
+     */
+    static void choose(float x, float y){
+        for(Shape c: listOfShapes) {
+            if(c.contains(x, y)) {
+                chosen = listOfShapes.indexOf(c);
+                return;
+            }
+        }
+         chosen = -1;
+    }
+    /**
+     * Sets color.
+     * @param color chosen color
+     */
     public static void setColor(Color color) {
         if(chosen >= 0)
             listOfColors.set(chosen, color);
+        GUI.doRepaint();
     }
-
-
-    public static void moveShape(Shape s, double w, double h) {
+    /**
+     * Moves chosen shape.
+     * @param s chosen shape
+     * @param w difference in x coordinates
+     * @param h difference in y coordinates
+     */
+    static void moveShape(Shape s, double w, double h) {
         AffineTransform a = new AffineTransform(1,0,0,1,w,h);
         Shape shape = new GeneralPath(s).createTransformedShape(a);
         listOfShapes.set(chosen, shape);
         GUI.doRepaint();
     }
-
-    public static double getXCenter(Shape shape){
+    /**
+     * Gets the x coordinate of a shape center.
+     * @param shape chosen shape
+     * @return x coordinate of shape center
+     */
+    private static double getXCenter(Shape shape){
         Rectangle2D rec = shape.getBounds2D();
         return rec.getX()+rec.getWidth()/2;
     }
-
-    public static double getYCenter(Shape shape){
+    /**
+     * Gets the y coordinate of a shape center.
+     * @param shape chosen shape
+     * @return y coordinate of shape center
+     */
+    private static double getYCenter(Shape shape){
         Rectangle2D rec = shape.getBounds2D();
         return rec.getY()+rec.getHeight()/2;
     }
-
-    public static void resizeShape(double s) {
+    /**
+     * Resizes chosen shape.
+     * @param s scale
+     */
+    static void resizeShape(double s) {
         AffineTransform a = new AffineTransform(s,0,0,s,0,0);
         Shape shape = new GeneralPath(listOfShapes.get(chosen)).createTransformedShape(a);
         AffineTransform b = new AffineTransform(1,0,0,1, getXCenter(Mouse.chosenTemp) - getXCenter(shape),
@@ -69,37 +150,63 @@ public class Surface extends JPanel {
         listOfShapes.set(chosen, shape);
         GUI.doRepaint();
     }
-    public static void setMode(Mode m) {
+
+    /**
+     * Sets mode.
+     * @param m mode
+     */
+    static void setMode(Mode m) {
         mode = m;
     }
 
-    public static Mode getMode() {
+    static Mode getMode() {
         return mode;
     }
-
-    public static GeneralPath getPath() {
-        return path;
+    /**
+     * Sets path from shape.
+     * @param shape shape that should be set as path
+     */
+    static void addPath(Shape shape) {
+        path = new GeneralPath(shape);
+        GUI.doRepaint();
     }
-
-    public static void setPath(GeneralPath p) {
+    /**
+     * Sets path.
+     * @param p shape that should be set as path
+     */
+    static void setPath(GeneralPath p) {
         path = p;
+        GUI.doRepaint();
     }
 
-    public static void setPol(Circle c) {
+    /**
+     * Sets pol, red circle that indicates the beginning of a new polygon shape.
+     * @param c circle
+     */
+    static void setPol(Circle c) {
         pol = c;
+        GUI.doRepaint();
     }
-
-    public static Circle getPol() {
+    /**
+     * Gets pol.
+     * @return circle
+     */
+    static Circle getPol() {
         return pol;
     }
-
-    public static void setPathToNull() {
+    /**
+     * Erases information needed when a polygon is being drawn.
+     */
+    static void setPathToNull() {
         path = null;
         pol = null;
         GUI.doRepaint();
-        Mouse.setIsFirstClick(true);
+        Mouse.setIsFirstClick();
     }
-
+    /**
+     * Responsible for painting the shapes seen in drawing area.
+     * @param g graphics
+     */
     private void doDrawing(Graphics g) {
 
         Graphics2D g2d = (Graphics2D) g;
@@ -118,7 +225,10 @@ public class Surface extends JPanel {
             g2d.fill(pol);
         }
     }
-
+    /**
+     * Paints the surface
+     * @param g graphics
+     */
     @Override
     public void paint(Graphics g) {
         super.paint(g);

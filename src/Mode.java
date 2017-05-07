@@ -1,6 +1,8 @@
 /**
- * Created by kasia on 04.05.2017.
+ * An enum mode for types of action: ELLIPSE, RECTANGLE, POLYGON, SELECT. Three for drawing and one for editing shapes.
+ * @author Katarzyna Marek
+ * @version 1.0
  */
 enum Mode {
-    ELIPSE, RECTANGLE, POLYGON, SELECT;
+    ELLIPSE, RECTANGLE, POLYGON, SELECT
 }

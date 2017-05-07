@@ -1,25 +1,32 @@
 import javax.swing.*;
-import java.awt.*;
 
+/**
+ * Class main frame.
+ * @author Katarzyna Marek
+ * @version 1.0
+ */
 class GUI extends JFrame {
-    static Surface surface;
-    public GUI() {
+    private static Surface surface;
+
+    /**
+     * Constructor for main frame.
+     */
+    GUI() {
 
         surface = new Surface();
         add(surface);
         setTitle("Edytor Graficzny");
         setSize(700, 400);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
     }
 
-    public static void doRepaint() {
+    /**
+     * Triggers paint function for Surface.
+     */
+    static void doRepaint() {
         surface.repaint();
     }
 
-    public static void main(String[] args) {
-       GUI frame = new GUI();
-       frame.setVisible(true);
-    }
 
 }

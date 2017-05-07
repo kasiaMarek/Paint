@@ -2,10 +2,15 @@ import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 
 /**
- * Created by kasia on 04.05.2017.
+ * A class handling mouse wheel actions.
+ * @author Katarzyna Marek
+ * @version 1.0
  */
 class MouseWheel implements MouseWheelListener {
-
+    /**
+     * Function resizing chosen shape if in SELECT mode and mouse wheel is moved.
+     * @param e event that occurs when mouse wheel is moved
+     */
     @Override
     public void mouseWheelMoved(MouseWheelEvent e) {
         if(Surface.getMode() == Mode.SELECT) {

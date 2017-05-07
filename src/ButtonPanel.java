@@ -2,31 +2,29 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- * Created by kasia on 04.05.2017.
+ * Class containing buttons "Ellipse", "Rectangle", "Polygon", "Select" and "Option".
+ * @author Katarzyna Marek
+ * @version 1.0
  */
-public class ButtonPanel extends JPanel {
-    private Mode mode = Mode.ELIPSE;
-
-    public ButtonPanel() {
-        add(new ShapeButton("Elipse", Mode.ELIPSE));
+class ButtonPanel extends JPanel {
+     ButtonPanel() {
+        add(new ShapeButton("Ellipse", Mode.ELLIPSE));
         add(new ShapeButton("Rectangle", Mode.RECTANGLE));
         add(new ShapeButton("Polygon", Mode.POLYGON));
         add(new ShapeButton("Select", Mode.SELECT));
         add(new OptionMenu());
     }
-
+    /**
+     * Inside class defining shape buttons.
+     */
     public class ShapeButton extends Button {
 
-        public ShapeButton(String str, Mode m) {
+         ShapeButton(String str, Mode m) {
             this.setLabel(str);
             addActionListener((e) -> {
                 Surface.setMode(m);
                 Surface.setPathToNull();
             });
         }
-    }
-
-    public Mode getMode() {
-        return mode;
     }
 }

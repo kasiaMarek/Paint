@@ -1,26 +1,29 @@
-import com.sun.tools.classfile.InnerClasses_attribute;
-
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 /**
- * Created by kasia on 04.05.2017.
+ * A class "Option" menu item.
+ * @author Katarzyna Marek
+ * @version 1.0
  */
-public class InfoButton extends JMenuItem {
-    public InfoButton() {
+class InfoButton extends JMenuItem {
+    /**
+     *  Creates a menu item with tile "Info" that opens information frame.
+     */
+    InfoButton() {
         setText("Info");
-        addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                InfoFrame info = new InfoFrame();
-                info.setVisible(true);
-            }
+        addActionListener(e -> {
+            InfoFrame info = new InfoFrame();
+            info.setVisible(true);
         });
     }
-
+    /**
+     *  Class information frame.
+     */
     private class InfoFrame extends JFrame {
-        public InfoFrame() {
+        /**
+         *  Creates information frame.
+         */
+        InfoFrame() {
             JLabel label = new JLabel();
             label.setHorizontalAlignment(SwingConstants.CENTER);
             setText(label);
@@ -31,15 +34,17 @@ public class InfoButton extends JMenuItem {
             setLocationRelativeTo(null);
             setAlwaysOnTop( true );
         }
-
+        /**
+         *  A function printing information.
+         *  @param label a component on which information is print
+         */
         private void setText(JLabel label) {
-            StringBuilder sb = new StringBuilder();
-            sb.append("<html><center>");
-            sb.append("<br/>" + "nazwa: Edytor graficzny" + "<br/>" + "<br/>" +
+            String sb = "<html><center>" +
+                    "<br/>" + "nazwa: Edytor graficzny" + "<br/>" + "<br/>" +
                     "Program ten pozwala na tworzenie obrazow z protych figur geometycznych." + "<br/>" + "<br/>" +
-                    "autor: Katarzyna Marek");
-            sb.append("</center></html>");
-            label.setText(sb.toString());
+                    "autor: Katarzyna Marek" +
+                    "</center></html>";
+            label.setText(sb);
         }
     }
 }

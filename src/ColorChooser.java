@@ -1,14 +1,17 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-
 /**
- * Created by kasia on 04.05.2017.
+ * A class frame for color chooser.
+ * @author Katarzyna Marek
+ * @version 1.0
  */
 public class ColorChooser extends JFrame {
-    JColorChooser chooser = new JColorChooser();
-    public ColorChooser() {
+    private JColorChooser chooser = new JColorChooser();
+
+    /**
+     * Creates a frame and adds color chooser.
+     */
+    ColorChooser() {
         add(chooser);
         setTitle("Wybor koloru");
         setSize(300, 200);
@@ -17,7 +20,10 @@ public class ColorChooser extends JFrame {
         setLocation(950,550);
         setAlwaysOnTop( true );
     }
-
+    /**
+     * Gets the color chosen by user in color chooser.
+     * @return color chosen by user
+     */
     public Color getColor(){
         return chooser.getColor();
     }

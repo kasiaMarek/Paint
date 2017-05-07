@@ -1,18 +1,26 @@
 import javax.swing.*;
 /**
- * Created by kasia on 04.05.2017.
+ * A class option menu bar seen as a "Option" button.
+ * @author Katarzyna Marek
+ * @version 1.0
  */
-public class OptionMenu extends JMenuBar {
-    JMenu menu = new JMenu("Opcje");
-    public OptionMenu () {
+class OptionMenu extends JMenuBar {
+    private JMenu menu;
+    /**
+     * Creates option bar and adds menu to it.
+     */
+    OptionMenu () {
+        menu = new JMenu("Opcje");
         makeMenu();
         this.add(menu);
     }
-
+    /**
+     * Makes menu seen after clicking "Option".
+     */
     private void makeMenu() {
         menu.add(new InfoButton());
-        menu.add(new SaveButton());
-        menu.add(new OpenButton());
+        menu.add(new SaveOpen(SaveOpen.Mode.SAVE));
+        menu.add(new SaveOpen(SaveOpen.Mode.OPEN));
     }
 
 }
