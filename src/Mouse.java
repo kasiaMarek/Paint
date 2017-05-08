@@ -14,7 +14,7 @@ import java.awt.geom.GeneralPath;
  * <li> Temporary rectangle for editing circle when a new rectangle is being drawn
  * <li> Temporary path for editing circle when a new polygon is being drawn
  * <li> Chosen shape used while editing shape in SELECT mode
- * <li> True false statement used while drawing a polygon. True before a start point for a new polygon is chosen by user.
+ * <li> An int used while drawing a polygon. Counts number of polygon's egdes.
  * </ul>
  * @author Katarzyna Marek
  * @version 1.0
@@ -27,16 +27,16 @@ public class Mouse extends MouseAdapter {
     static Rectangle rectangle;
     private GeneralPath path = new GeneralPath();
     static Shape chosenTemp;
-    private static boolean isFirstClick = true;
+    private static int numOfEdges = 0;
     /**
      * Creates mouse adapter.
      */
     Mouse() {}
     /**
-     * Setter for isFirstClick to true.
+     * Sets numOfEdges to 0.
      */
     static void setIsFirstClick() {
-        isFirstClick = true;
+        numOfEdges = 0;
     }
     /**
      * Displays color chooser.
@@ -48,21 +48,24 @@ public class Mouse extends MouseAdapter {
      * Draws a new polygon shape.
      */
     private void mousePressedInPolygonMode(){
-        if(isFirstClick) {
+        if(numOfEdges == 0) {
             path = new GeneralPath();
             path.moveTo(sx, sy);
             Surface.setPath(path);
             Surface.setPol(new Circle(sx-5, sy-5, 10 , 10));
-            isFirstClick = false;
+            numOfEdges = 1;
         }
         else {
             if(Surface.getPol().getBounds2D().contains(sx, sy)) {
-                path.closePath();
-                Surface.addShape(path,Color.pink);
+                if(numOfEdges > 2) {
+                    path.closePath();
+                    Surface.addShape(path, Color.darkGray);
+                }
                 Surface.setPathToNull();
             } else {
                 path.lineTo(sx, sy);
                 Surface.setPath(path);
+                numOfEdges++;
             }
         }
     }
@@ -114,6 +117,8 @@ public class Mouse extends MouseAdapter {
     }
     /**
      * Adds a shape to the list of shapes with color to it. Clears path variables so they can be used again.
+     * @param shape shape that should be adde
+     * @param color color of that shape
      */
     private void paintNewShape(Shape shape, Color color) {
         Surface.addShape(shape, color);
@@ -130,9 +135,9 @@ public class Mouse extends MouseAdapter {
      */
     public void mouseReleased(MouseEvent e) {
         if(Surface.getMode() == Mode.ELLIPSE)
-            paintNewShape(circle, Color.black);
+            paintNewShape(circle, Color.lightGray);
         if(Surface.getMode() == Mode.RECTANGLE)
-            paintNewShape(rectangle, Color.cyan);
+            paintNewShape(rectangle, Color.gray);
         if(Surface.getChosen() >= 0)
             chosenTemp = Surface.getShape(Surface.getChosen());
     }

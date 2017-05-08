@@ -8,11 +8,12 @@ import java.awt.*;
  */
 class ButtonPanel extends JPanel {
      ButtonPanel() {
+        add(new OptionMenu());
         add(new ShapeButton("Ellipse", Mode.ELLIPSE));
         add(new ShapeButton("Rectangle", Mode.RECTANGLE));
         add(new ShapeButton("Polygon", Mode.POLYGON));
         add(new ShapeButton("Select", Mode.SELECT));
-        add(new OptionMenu());
+        add(new ShapeOptionMenu());
     }
     /**
      * Inside class defining shape buttons.

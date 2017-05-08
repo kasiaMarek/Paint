@@ -59,9 +59,55 @@ public class Surface extends JPanel {
      * Removes all the shapes from the list
      */
     static void removeShapes() {
-        for(int i = 0; i < Surface.listOfShapes.size(); i++) {
-            Surface.listOfShapes.remove(i);
-            Surface.listOfColors.remove(i);
+        int size = Surface.listOfShapes.size();
+        for(int i = 0; i < size; i++) {
+            Surface.listOfShapes.remove(0);
+            Surface.listOfColors.remove(0);
+        }
+        chosen = -1;
+        path = null;
+    }
+    /**
+     * Removes chosen shape from the list
+     * @param i index of chosen shape
+     */
+    static void deleteShape(int i) {
+        Surface.listOfShapes.remove(i);
+        Surface.listOfColors.remove(i);
+        chosen = -1;
+        path = null;
+        GUI.doRepaint();
+    }
+    /**
+     * Moves up chosen shape on the list
+     * @param i index of chosen shape
+     */
+    static void moveUp(int i) {
+        if(i > 0 && i < listOfShapes.size()) {
+            Shape shape = listOfShapes.get(i);
+            Color color = listOfColors.get(i);
+            listOfShapes.set(i, listOfShapes.get(i-1));
+            listOfColors.set(i, listOfColors.get(i-1));
+            listOfShapes.set(i-1, shape);
+            listOfColors.set(i-1, color);
+            chosen += -1;
+            GUI.doRepaint();
+        }
+    }
+    /**
+     * Moves down chosen shape on the list
+     * @param i index of chosen shape
+     */
+    static void moveDown(int i) {
+        if(i < listOfShapes.size()-1 && i >= 0) {
+            Shape shape = listOfShapes.get(i);
+            Color color = listOfColors.get(i);
+            listOfShapes.set(i, listOfShapes.get(i+1));
+            listOfColors.set(i, listOfColors.get(i+1));
+            listOfShapes.set(i+1, shape);
+            listOfColors.set(i+1, color);
+            chosen += 1;
+            GUI.doRepaint();
         }
     }
     /**
@@ -93,10 +139,14 @@ public class Surface extends JPanel {
         for(Shape c: listOfShapes) {
             if(c.contains(x, y)) {
                 chosen = listOfShapes.indexOf(c);
+                path = new GeneralPath(c);
+                GUI.doRepaint();
                 return;
             }
         }
-         chosen = -1;
+        path = null;
+        GUI.doRepaint();
+        chosen = -1;
     }
     /**
      * Sets color.
@@ -117,6 +167,7 @@ public class Surface extends JPanel {
         AffineTransform a = new AffineTransform(1,0,0,1,w,h);
         Shape shape = new GeneralPath(s).createTransformedShape(a);
         listOfShapes.set(chosen, shape);
+        path = new GeneralPath(shape);
         GUI.doRepaint();
     }
     /**
@@ -148,6 +199,7 @@ public class Surface extends JPanel {
                 getYCenter(Mouse.chosenTemp) - getYCenter(shape));
         shape = new GeneralPath(shape).createTransformedShape(b);
         listOfShapes.set(chosen, shape);
+        path = new GeneralPath(shape);
         GUI.doRepaint();
     }
 
@@ -200,6 +252,7 @@ public class Surface extends JPanel {
     static void setPathToNull() {
         path = null;
         pol = null;
+        chosen = -1;
         GUI.doRepaint();
         Mouse.setIsFirstClick();
     }
@@ -217,7 +270,7 @@ public class Surface extends JPanel {
         }
 
         if(!(path == null)) {
-            g2d.setPaint(Color.black);
+            g2d.setPaint(Color.red);
             g2d.draw(path);
         }
         if(!(pol == null)) {
