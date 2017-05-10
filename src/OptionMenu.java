@@ -36,7 +36,7 @@ class OptionMenu extends JMenuBar {
             setText("New");
             addActionListener(e -> {
                 Surface.removeShapes();
-                GUI.doRepaint();
+                PApplet.doRepaint();
             });
         }
     }

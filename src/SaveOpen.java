@@ -59,7 +59,7 @@ class SaveOpen extends JMenuItem {
                 try {
                     Surface.removeShapes();
                     readFile(getSelectedFile().getAbsolutePath());
-                    GUI.doRepaint();
+                    PApplet.doRepaint();
                 }
                 catch(IOException e2){
                     System.out.println("Odczyt pliku sie nie powiodl");

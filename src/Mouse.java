@@ -124,7 +124,7 @@ public class Mouse extends MouseAdapter {
         Surface.addShape(shape, color);
         path = null;
         Surface.setPath(null);
-        GUI.doRepaint();
+        PApplet.doRepaint();
     }
     /**
      * Function handling actions in different modes when mouse is released.

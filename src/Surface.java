@@ -53,7 +53,7 @@ public class Surface extends JPanel {
     static void addShape(Shape shape, Color color) {
         listOfShapes.add(0, shape);
         listOfColors.add(0, color);
-        GUI.doRepaint();
+        PApplet.doRepaint();
     }
     /**
      * Removes all the shapes from the list
@@ -76,7 +76,7 @@ public class Surface extends JPanel {
         Surface.listOfColors.remove(i);
         chosen = -1;
         path = null;
-        GUI.doRepaint();
+        PApplet.doRepaint();
     }
     /**
      * Moves up chosen shape on the list
@@ -91,7 +91,7 @@ public class Surface extends JPanel {
             listOfShapes.set(i-1, shape);
             listOfColors.set(i-1, color);
             chosen += -1;
-            GUI.doRepaint();
+            PApplet.doRepaint();
         }
     }
     /**
@@ -107,7 +107,7 @@ public class Surface extends JPanel {
             listOfShapes.set(i+1, shape);
             listOfColors.set(i+1, color);
             chosen += 1;
-            GUI.doRepaint();
+            PApplet.doRepaint();
         }
     }
     /**
@@ -140,12 +140,12 @@ public class Surface extends JPanel {
             if(c.contains(x, y)) {
                 chosen = listOfShapes.indexOf(c);
                 path = new GeneralPath(c);
-                GUI.doRepaint();
+                PApplet.doRepaint();
                 return;
             }
         }
         path = null;
-        GUI.doRepaint();
+        PApplet.doRepaint();
         chosen = -1;
     }
     /**
@@ -155,7 +155,7 @@ public class Surface extends JPanel {
     public static void setColor(Color color) {
         if(chosen >= 0)
             listOfColors.set(chosen, color);
-        GUI.doRepaint();
+        PApplet.doRepaint();
     }
     /**
      * Moves chosen shape.
@@ -168,7 +168,7 @@ public class Surface extends JPanel {
         Shape shape = new GeneralPath(s).createTransformedShape(a);
         listOfShapes.set(chosen, shape);
         path = new GeneralPath(shape);
-        GUI.doRepaint();
+        PApplet.doRepaint();
     }
     /**
      * Gets the x coordinate of a shape center.
@@ -200,7 +200,7 @@ public class Surface extends JPanel {
         shape = new GeneralPath(shape).createTransformedShape(b);
         listOfShapes.set(chosen, shape);
         path = new GeneralPath(shape);
-        GUI.doRepaint();
+        PApplet.doRepaint();
     }
 
     /**
@@ -220,7 +220,7 @@ public class Surface extends JPanel {
      */
     static void addPath(Shape shape) {
         path = new GeneralPath(shape);
-        GUI.doRepaint();
+        PApplet.doRepaint();
     }
     /**
      * Sets path.
@@ -228,7 +228,7 @@ public class Surface extends JPanel {
      */
     static void setPath(GeneralPath p) {
         path = p;
-        GUI.doRepaint();
+        PApplet.doRepaint();
     }
 
     /**
@@ -237,7 +237,7 @@ public class Surface extends JPanel {
      */
     static void setPol(Circle c) {
         pol = c;
-        GUI.doRepaint();
+        PApplet.doRepaint();
     }
     /**
      * Gets pol.
@@ -253,7 +253,7 @@ public class Surface extends JPanel {
         path = null;
         pol = null;
         chosen = -1;
-        GUI.doRepaint();
+        PApplet.doRepaint();
         Mouse.setIsFirstClick();
     }
     /**
